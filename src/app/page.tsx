@@ -1,15 +1,30 @@
+import Link from "next/link";
 import { ArrowUpRight, PiggyBank, Target, Wallet } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { Logo } from "@/components/shared/logo";
+import { cn } from "@/lib/utils";
 import { formatINR } from "@/lib/format";
 
 export default function Home() {
   return (
-    <main className="bg-grain relative flex min-h-full flex-1 flex-col items-center justify-center px-6 py-20">
-      <div className="mx-auto w-full max-w-2xl text-center">
+    <main className="bg-grain relative flex min-h-full flex-1 flex-col px-6">
+      <header className="mx-auto flex w-full max-w-5xl items-center justify-between py-5">
+        <Logo />
+        <div className="flex items-center gap-2">
+          <Link href="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
+            Sign in
+          </Link>
+          <Link href="/signup" className={cn(buttonVariants({ size: "sm" }))}>
+            Get started
+          </Link>
+        </div>
+      </header>
+
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center py-16 text-center">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs font-medium text-muted-foreground shadow-card">
           <span className="size-1.5 rounded-full bg-primary" />
-          Phase 0 · design system online
+          Personal finance, minus the spreadsheet
         </div>
 
         <h1 className="font-heading text-balance text-5xl font-semibold tracking-tight text-foreground sm:text-6xl">
@@ -21,12 +36,18 @@ export default function Home() {
         </p>
 
         <div className="mt-8 flex items-center justify-center gap-3">
-          <Button size="lg" className="gap-1.5">
+          <Link
+            href="/signup"
+            className={cn(buttonVariants({ size: "lg" }), "h-10 gap-1.5 px-5")}
+          >
             Get started <ArrowUpRight className="size-4" />
-          </Button>
-          <Button size="lg" variant="outline">
-            See a demo
-          </Button>
+          </Link>
+          <Link
+            href="/login"
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-5")}
+          >
+            Sign in
+          </Link>
         </div>
 
         {/* token preview */}
