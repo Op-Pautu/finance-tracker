@@ -10,10 +10,16 @@ One-time backend setup. Takes ~5 minutes.
 Copy `.env.example` → `.env.local` and fill in:
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=...        # Settings → API → Project URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...   # Settings → API → Project API keys → anon public
+NEXT_PUBLIC_SUPABASE_URL=...                 # Settings → API → Project URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...     # Settings → API Keys → publishable (sb_publishable_...)
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
+
+> **Key naming:** Supabase is retiring the legacy `anon` / `service_role` JWT
+> keys (removal slated for late 2026) in favour of new **publishable**
+> (`sb_publishable_...`) and **secret** (`sb_secret_...`) keys. Use the
+> publishable key here. If your project only shows an `anon` key, set
+> `NEXT_PUBLIC_SUPABASE_ANON_KEY` instead — the app falls back to it.
 
 ## 3. Create the schema
 Open **SQL Editor** in the Supabase dashboard → paste the contents of
