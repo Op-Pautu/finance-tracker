@@ -7,7 +7,7 @@
 export type TxKind = "income" | "expense";
 export type GoalStatus = "active" | "done" | "archived";
 
-export interface Profile {
+export type Profile = {
   id: string;
   display_name: string | null;
   currency: string;
@@ -17,7 +17,7 @@ export interface Profile {
   created_at: string;
 }
 
-export interface Category {
+export type Category = {
   id: string;
   user_id: string;
   name: string;
@@ -28,7 +28,7 @@ export interface Category {
   created_at: string;
 }
 
-export interface Transaction {
+export type Transaction = {
   id: string;
   user_id: string;
   amount: number;
@@ -39,7 +39,7 @@ export interface Transaction {
   created_at: string;
 }
 
-export interface Budget {
+export type Budget = {
   id: string;
   user_id: string;
   category_id: string;
@@ -48,7 +48,7 @@ export interface Budget {
   created_at: string;
 }
 
-export interface Goal {
+export type Goal = {
   id: string;
   user_id: string;
   name: string;
@@ -60,7 +60,7 @@ export interface Goal {
   created_at: string;
 }
 
-export interface GoalContribution {
+export type GoalContribution = {
   id: string;
   user_id: string;
   goal_id: string;
@@ -70,7 +70,7 @@ export interface GoalContribution {
   created_at: string;
 }
 
-export interface Emi {
+export type Emi = {
   id: string;
   user_id: string;
   name: string;
@@ -84,7 +84,7 @@ export interface Emi {
   created_at: string;
 }
 
-export interface EmiPayment {
+export type EmiPayment = {
   id: string;
   user_id: string;
   emi_id: string;
@@ -93,57 +93,58 @@ export interface EmiPayment {
   created_at: string;
 }
 
-type Row<T> = T;
 type Insert<T, Optional extends keyof T> = Omit<T, Optional> &
   Partial<Pick<T, Optional>>;
-type Update<T> = Partial<T>;
+
+/**
+ * Shape supabase-js expects per table (Row/Insert/Update/Relationships).
+ * The Relationships field is required by the client's generics — omitting it
+ * collapses query inference to `never`.
+ */
+type Table<R, Ins, Upd = Partial<R>> = {
+  Row: R;
+  Insert: Ins;
+  Update: Upd;
+  Relationships: [];
+};
 
 /** Columns the DB fills in automatically (safe to omit on insert). */
 type Generated = "id" | "created_at";
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
-      profiles: {
-        Row: Row<Profile>;
-        Insert: Insert<Profile, "created_at">;
-        Update: Update<Profile>;
-      };
-      categories: {
-        Row: Row<Category>;
-        Insert: Insert<Category, Generated | "is_default" | "color" | "icon">;
-        Update: Update<Category>;
-      };
-      transactions: {
-        Row: Row<Transaction>;
-        Insert: Insert<Transaction, Generated | "occurred_at" | "note" | "category_id">;
-        Update: Update<Transaction>;
-      };
-      budgets: {
-        Row: Row<Budget>;
-        Insert: Insert<Budget, Generated>;
-        Update: Update<Budget>;
-      };
-      goals: {
-        Row: Row<Goal>;
-        Insert: Insert<Goal, Generated | "status" | "color" | "icon" | "target_date">;
-        Update: Update<Goal>;
-      };
-      goal_contributions: {
-        Row: Row<GoalContribution>;
-        Insert: Insert<GoalContribution, Generated | "occurred_at" | "note">;
-        Update: Update<GoalContribution>;
-      };
-      emis: {
-        Row: Row<Emi>;
-        Insert: Insert<Emi, Generated | "months_paid" | "principal" | "day_of_month" | "interest_rate" | "start_date">;
-        Update: Update<Emi>;
-      };
-      emi_payments: {
-        Row: Row<EmiPayment>;
-        Insert: Insert<EmiPayment, Generated | "paid_on">;
-        Update: Update<EmiPayment>;
-      };
+      profiles: Table<Profile, Insert<Profile, "created_at">>;
+      categories: Table<
+        Category,
+        Insert<Category, Generated | "is_default" | "color" | "icon">
+      >;
+      transactions: Table<
+        Transaction,
+        Insert<Transaction, Generated | "occurred_at" | "note" | "category_id">
+      >;
+      budgets: Table<Budget, Insert<Budget, Generated>>;
+      goals: Table<
+        Goal,
+        Insert<Goal, Generated | "status" | "color" | "icon" | "target_date">
+      >;
+      goal_contributions: Table<
+        GoalContribution,
+        Insert<GoalContribution, Generated | "occurred_at" | "note">
+      >;
+      emis: Table<
+        Emi,
+        Insert<
+          Emi,
+          | Generated
+          | "months_paid"
+          | "principal"
+          | "day_of_month"
+          | "interest_rate"
+          | "start_date"
+        >
+      >;
+      emi_payments: Table<EmiPayment, Insert<EmiPayment, Generated | "paid_on">>;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
