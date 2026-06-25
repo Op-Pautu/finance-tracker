@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinTrack
 
-## Getting Started
+A clean, modern personal finance tracker — know where your money goes, set budgets,
+hit savings goals, and stay on top of EMIs. Built as a multi-tenant SaaS: anyone can
+sign up and only ever sees their own data.
 
-First, run the development server:
+> Currency: **INR (₹)**. Light, card-based UI with a jade/terracotta palette and a
+> ledger-style monospaced numerals.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **Dashboard** — balance, monthly income/spend/savings, spending breakdown donut,
+  recent activity, plus budget and EMI watch cards.
+- **Transactions** — full CRUD with categories, month/type/category filters and note
+  search, all driven through the URL.
+- **Budgets** — per-category monthly limits with over/under progress and a dashboard
+  summary.
+- **Goals** — savings goals with progress rings, contributions, and a detail page with
+  payoff projection.
+- **EMIs** — loan/installment tracker with payoff countdown, monthly outflow and
+  one-tap "mark paid".
+- **Analytics** — 6-month income-vs-spending trend, month-over-month comparison, and a
+  category breakdown.
+- **Settings** — editable profile (name, monthly income).
+
+## Tech stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router, `src/`) + React 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 + shadcn/ui (Base UI primitives) |
+| Backend | Supabase (Postgres + Auth + Row Level Security) |
+| Forms | React Hook Form + Zod |
+| Charts | Recharts |
+| Deploy | Vercel + Supabase (free tiers) |
+
+The app is **security-by-database**: every table is scoped by `user_id` and protected
+by RLS, so multi-tenancy is enforced in Postgres rather than app code.
+
+## Getting started
+
+1. **Install**
+   ```bash
+   npm install
+   ```
+
+2. **Set up Supabase** — follow [`docs/SUPABASE_SETUP.md`](docs/SUPABASE_SETUP.md):
+   create a project, run [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql)
+   in the SQL editor, and copy your keys into `.env.local` (see [`.env.example`](.env.example)).
+
+3. **Run**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000), sign up, and start tracking.
+
+## Project structure
+
+```
+src/
+  app/
+    (marketing)         landing page
+    (auth)              login / signup
+    (app)               authed shell: dashboard, transactions, budget,
+                        goals, emis, analytics, settings
+  components/           ui (shadcn) + feature components
+  lib/
+    supabase/           browser/server clients, auth helpers
+    queries/            server-side data reads
+    actions/            server actions (mutations)
+    validations/        zod schemas
+supabase/migrations/    database schema, RLS, triggers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploying to Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Push to GitHub and import the repo in Vercel.
+2. Add the env vars from `.env.example` (`NEXT_PUBLIC_SUPABASE_URL`,
+   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_SITE_URL` = your Vercel URL).
+3. In Supabase → Authentication → URL Configuration, set the Site URL and add your
+   Vercel URL to the redirect allow-list.
+4. Deploy.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Roadmap
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Recurring transactions, CSV import, Claude-powered monthly insights, investment /
+net-worth tracking, weekly email digests, and a Pro tier.
