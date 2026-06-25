@@ -12,7 +12,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Emi } from "@/types/db";
 
-export function EmiForm({ emi, onDone }: { emi?: Emi; onDone: () => void }) {
+export function EmiForm({
+  emi,
+  onDone,
+  onSaved,
+}: {
+  emi?: Emi;
+  onDone: () => void;
+  onSaved?: () => void;
+}) {
   const isEdit = Boolean(emi);
 
   const form = useForm<EmiValues>({
@@ -31,6 +39,7 @@ export function EmiForm({ emi, onDone }: { emi?: Emi; onDone: () => void }) {
     const res = emi ? await updateEmi(emi.id, values) : await createEmi(values);
     if (res.ok) {
       toast.success(isEdit ? "EMI updated" : "EMI added");
+      onSaved?.();
       onDone();
     } else {
       toast.error(res.error);

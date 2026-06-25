@@ -14,10 +14,12 @@ export function EmiDialog({
   open,
   onOpenChange,
   emi,
+  onSaved,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   emi?: Emi;
+  onSaved?: () => void;
 }) {
   const isEdit = Boolean(emi);
   return (
@@ -31,7 +33,11 @@ export function EmiDialog({
               : "Track a loan or installment — laptop, scooty, anything on EMI."}
           </DialogDescription>
         </DialogHeader>
-        <EmiForm emi={emi} onDone={() => onOpenChange(false)} />
+        <EmiForm
+          emi={emi}
+          onSaved={onSaved}
+          onDone={() => onOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );
