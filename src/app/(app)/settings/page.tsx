@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LogOut } from "lucide-react";
+import { LogOut, Download } from "lucide-react";
 import { getCurrentProfile } from "@/lib/supabase/auth";
 import { signOutAction } from "@/lib/actions/auth";
 import {
@@ -9,7 +9,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/app/page-header";
 import { ProfileForm } from "@/components/settings/profile-form";
 
@@ -59,6 +60,33 @@ export default async function SettingsPage() {
                 Sign out
               </Button>
             </form>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Data</CardTitle>
+          <CardDescription>Export your data — it&apos;s yours.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-foreground">
+                Export transactions
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Download all your transactions as a CSV file.
+              </p>
+            </div>
+            <a
+              href="/api/export/transactions"
+              download
+              className={cn(buttonVariants({ variant: "outline" }), "gap-1.5")}
+            >
+              <Download className="size-4" />
+              Export CSV
+            </a>
           </div>
         </CardContent>
       </Card>
