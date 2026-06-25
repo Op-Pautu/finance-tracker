@@ -12,14 +12,17 @@ import type { Category } from "@/types/db";
  * (the dashboard CTA links here), then strips the param.
  */
 export function AddTransaction({ categories }: { categories: Category[] }) {
-  const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  // Derive the initial open state from the URL (no setState-in-effect).
+  const [open, setOpen] = React.useState(
+    () => searchParams.get("new") === "1",
+  );
 
+  // Once opened from ?new=1, strip the param so refresh doesn't reopen it.
   React.useEffect(() => {
     if (searchParams.get("new") === "1") {
-      setOpen(true);
       const params = new URLSearchParams(searchParams);
       params.delete("new");
       const qs = params.toString();

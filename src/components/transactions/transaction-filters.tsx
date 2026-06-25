@@ -49,9 +49,9 @@ export function TransactionFilters({ categories }: { categories: Category[] }) {
     [router, pathname, searchParams],
   );
 
-  // Debounced search input.
+  // Debounced search input. Initialised from the URL; the debounce pushes
+  // changes back to the URL (which re-renders the server list).
   const [search, setSearch] = React.useState(q);
-  React.useEffect(() => setSearch(q), [q]);
   React.useEffect(() => {
     const id = setTimeout(() => {
       if (search !== q) setParam({ q: search });
