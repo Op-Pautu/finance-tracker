@@ -16,6 +16,16 @@ import {
   Tag,
   Target,
   PiggyBank,
+  Plane,
+  Car,
+  Gift,
+  Smartphone,
+  Umbrella,
+  Sparkles,
+  Briefcase,
+  Dumbbell,
+  Home,
+  Heart,
   type LucideIcon,
 } from "lucide-react";
 import { createElement } from "react";
@@ -40,6 +50,17 @@ const ICONS: Record<string, LucideIcon> = {
   "piggy-bank": PiggyBank,
   target: Target,
   tag: Tag,
+  // goal-friendly icons
+  plane: Plane,
+  car: Car,
+  gift: Gift,
+  smartphone: Smartphone,
+  umbrella: Umbrella,
+  sparkles: Sparkles,
+  briefcase: Briefcase,
+  dumbbell: Dumbbell,
+  home: Home,
+  heart: Heart,
 };
 
 export function resolveIcon(name?: string | null): LucideIcon {
