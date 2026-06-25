@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getCurrentProfile } from "@/lib/supabase/auth";
 import { Sidebar } from "@/components/app/sidebar";
 import { MobileNav } from "@/components/app/mobile-nav";
@@ -10,6 +11,9 @@ export default async function AppLayout({
   children: React.ReactNode;
 }) {
   const { user, profile } = await getCurrentProfile();
+
+  // First-run users go through onboarding before entering the app.
+  if (profile && !profile.onboarding_done) redirect("/onboarding");
 
   const name =
     profile?.display_name || user.email?.split("@")[0] || "there";

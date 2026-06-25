@@ -11,6 +11,7 @@ const PROTECTED_PREFIXES = [
   "/emis",
   "/analytics",
   "/settings",
+  "/onboarding",
 ];
 
 const AUTH_ROUTES = ["/login", "/signup"];
