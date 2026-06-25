@@ -13,6 +13,7 @@ import {
 import { requireUser } from "@/lib/supabase/auth";
 import { getDashboardData } from "@/lib/queries/dashboard";
 import { getBudgetSummary } from "@/lib/queries/budgets";
+import { getEmiSummary } from "@/lib/queries/emis";
 import { monthLabel } from "@/lib/date";
 import { formatINR, formatPercent } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,7 @@ import {
 import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { BudgetWatch } from "@/components/dashboard/budget-watch";
+import { EmiWatch } from "@/components/dashboard/emi-watch";
 import { SpendingDonut } from "@/components/dashboard/spending-donut";
 import { RecentTransactions } from "@/components/dashboard/recent-transactions";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -35,9 +37,10 @@ export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
   const { user } = await requireUser();
-  const [data, budgetSummary] = await Promise.all([
+  const [data, budgetSummary, emiSummary] = await Promise.all([
     getDashboardData(user.id),
     getBudgetSummary(user.id),
+    getEmiSummary(user.id),
   ]);
   const now = new Date();
 
@@ -96,8 +99,11 @@ export default async function DashboardPage() {
             />
           </div>
 
-          {/* budget watch */}
-          <BudgetWatch summary={budgetSummary} />
+          {/* budget + EMI watch */}
+          <div className="grid gap-4 lg:grid-cols-2">
+            <BudgetWatch summary={budgetSummary} />
+            <EmiWatch summary={emiSummary} />
+          </div>
 
           {/* breakdown + recent */}
           <div className="grid gap-4 lg:grid-cols-5">
