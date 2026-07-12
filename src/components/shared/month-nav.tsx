@@ -43,7 +43,7 @@ export function MonthNav() {
     <div className="flex w-fit items-center rounded-lg border bg-card p-0.5">
       <Button
         variant="ghost"
-        size="icon-sm"
+        size="icon"
         aria-label="Previous month"
         onClick={() => setMonth(shiftMonthKey(month, -1))}
       >
@@ -62,7 +62,7 @@ export function MonthNav() {
             <Button
               variant="ghost"
               size="sm"
-              className="min-w-32 justify-center font-medium"
+              className="h-8 min-w-32 justify-center font-medium"
             />
           }
         >
@@ -116,7 +116,7 @@ export function MonthNav() {
 
       <Button
         variant="ghost"
-        size="icon-sm"
+        size="icon"
         aria-label="Next month"
         onClick={() => setMonth(shiftMonthKey(month, 1))}
       >

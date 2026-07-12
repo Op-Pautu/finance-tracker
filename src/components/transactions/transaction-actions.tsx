@@ -54,7 +54,7 @@ export function TransactionActions({
           render={
             <Button
               variant="ghost"
-              size="icon-sm"
+              size="icon"
               aria-label="Transaction actions"
             />
           }
