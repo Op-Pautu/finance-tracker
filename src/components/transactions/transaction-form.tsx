@@ -131,7 +131,7 @@ export function TransactionForm({ categories, transaction, onDone }: Props) {
           name="category_id"
           render={({ field }) => (
             <Select
-              value={field.value || undefined}
+              value={field.value}
               onValueChange={(v) => field.onChange(v)}
             >
               <SelectTrigger className="w-full">
