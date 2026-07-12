@@ -10,6 +10,10 @@ export type AuthState =
   | { notice: string }
   | null;
 
+function isValidRedirect(path: string): boolean {
+  return path.startsWith("/") && !path.startsWith("//");
+}
+
 /** Email + password sign in. On success, redirects into the app. */
 export async function signInAction(
   _prev: AuthState,
@@ -28,8 +32,9 @@ export async function signInAction(
   if (error) return { error: error.message };
 
   const next = (formData.get("next") as string) || "/dashboard";
+  const validNext = isValidRedirect(next) ? next : "/dashboard";
   revalidatePath("/", "layout");
-  redirect(next);
+  redirect(validNext);
 }
 
 /** Email + password sign up. The handle_new_user trigger seeds their data. */

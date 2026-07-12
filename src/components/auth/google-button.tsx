@@ -5,6 +5,10 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+function isValidRedirect(path: string): boolean {
+  return path.startsWith("/") && !path.startsWith("//");
+}
+
 /** "Continue with Google" — initiates the OAuth redirect from the browser. */
 export function GoogleButton({ next }: { next?: string }) {
   const [loading, setLoading] = React.useState(false);
@@ -12,8 +16,9 @@ export function GoogleButton({ next }: { next?: string }) {
   async function handleClick() {
     setLoading(true);
     const supabase = createClient();
+    const validNext = next && isValidRedirect(next) ? next : undefined;
     const redirectTo = `${window.location.origin}/auth/callback${
-      next ? `?next=${encodeURIComponent(next)}` : ""
+      validNext ? `?next=${encodeURIComponent(validNext)}` : ""
     }`;
 
     const { error } = await supabase.auth.signInWithOAuth({
