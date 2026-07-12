@@ -8,6 +8,7 @@ import { emiSchema, type EmiValues } from "@/lib/validations/emi";
 import { createEmi, updateEmi } from "@/lib/actions/emis";
 import { today } from "@/lib/date";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Emi } from "@/types/db";
@@ -58,9 +59,7 @@ export function EmiForm({
           autoFocus
           {...form.register("name")}
         />
-        {errors.name && (
-          <p className="text-xs text-expense">{errors.name.message}</p>
-        )}
+        <FieldError>{errors.name?.message}</FieldError>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -78,11 +77,7 @@ export function EmiForm({
               {...form.register("monthly_amount", { valueAsNumber: true })}
             />
           </div>
-          {errors.monthly_amount && (
-            <p className="text-xs text-expense">
-              {errors.monthly_amount.message}
-            </p>
-          )}
+          <FieldError>{errors.monthly_amount?.message}</FieldError>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="emi-start">Start date</Label>
@@ -92,9 +87,7 @@ export function EmiForm({
             className="tabular"
             {...form.register("start_date")}
           />
-          {errors.start_date && (
-            <p className="text-xs text-expense">{errors.start_date.message}</p>
-          )}
+          <FieldError>{errors.start_date?.message}</FieldError>
         </div>
       </div>
 
@@ -108,9 +101,7 @@ export function EmiForm({
             className="tabular"
             {...form.register("total_months", { valueAsNumber: true })}
           />
-          {errors.total_months && (
-            <p className="text-xs text-expense">{errors.total_months.message}</p>
-          )}
+          <FieldError>{errors.total_months?.message}</FieldError>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="emi-paid">Months paid</Label>
@@ -121,9 +112,7 @@ export function EmiForm({
             className="tabular"
             {...form.register("months_paid", { valueAsNumber: true })}
           />
-          {errors.months_paid && (
-            <p className="text-xs text-expense">{errors.months_paid.message}</p>
-          )}
+          <FieldError>{errors.months_paid?.message}</FieldError>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="emi-day">Due day (optional)</Label>
@@ -134,9 +123,7 @@ export function EmiForm({
             className="tabular"
             {...form.register("day_of_month", { valueAsNumber: true })}
           />
-          {errors.day_of_month && (
-            <p className="text-xs text-expense">{errors.day_of_month.message}</p>
-          )}
+          <FieldError>{errors.day_of_month?.message}</FieldError>
         </div>
       </div>
 

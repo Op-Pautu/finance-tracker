@@ -15,6 +15,7 @@ import {
 import { resolveIcon } from "@/components/shared/category-icon";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { TxKind } from "@/types/db";
@@ -52,9 +53,7 @@ export function CategoryForm({ onDone }: { onDone: () => void }) {
           autoFocus
           {...form.register("name")}
         />
-        {errors.name && (
-          <p className="text-xs text-expense">{errors.name.message}</p>
-        )}
+        <FieldError>{errors.name?.message}</FieldError>
       </div>
 
       {/* kind toggle */}

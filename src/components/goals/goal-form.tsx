@@ -15,6 +15,7 @@ import {
 import { resolveIcon } from "@/components/shared/category-icon";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Goal } from "@/types/db";
@@ -63,9 +64,7 @@ export function GoalForm({
           autoFocus
           {...form.register("name")}
         />
-        {errors.name && (
-          <p className="text-xs text-expense">{errors.name.message}</p>
-        )}
+        <FieldError>{errors.name?.message}</FieldError>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -83,11 +82,7 @@ export function GoalForm({
               {...form.register("target_amount", { valueAsNumber: true })}
             />
           </div>
-          {errors.target_amount && (
-            <p className="text-xs text-expense">
-              {errors.target_amount.message}
-            </p>
-          )}
+          <FieldError>{errors.target_amount?.message}</FieldError>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="goal-date">Target date (optional)</Label>

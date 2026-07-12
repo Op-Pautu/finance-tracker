@@ -11,6 +11,7 @@ import {
 import { addContribution } from "@/lib/actions/goals";
 import { today } from "@/lib/date";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -62,9 +63,7 @@ export function ContributionForm({
             {...form.register("amount", { valueAsNumber: true })}
           />
         </div>
-        {errors.amount && (
-          <p className="text-xs text-expense">{errors.amount.message}</p>
-        )}
+        <FieldError>{errors.amount?.message}</FieldError>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

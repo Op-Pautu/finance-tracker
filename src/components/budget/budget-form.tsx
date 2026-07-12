@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { budgetSchema, type BudgetValues } from "@/lib/validations/budget";
 import { upsertBudget } from "@/lib/actions/budgets";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -109,9 +110,7 @@ export function BudgetForm({
             )}
           />
         )}
-        {errors.category_id && (
-          <p className="text-xs text-expense">{errors.category_id.message}</p>
-        )}
+        <FieldError>{errors.category_id?.message}</FieldError>
       </div>
 
       <div className="space-y-1.5">
@@ -129,9 +128,7 @@ export function BudgetForm({
             {...form.register("amount", { valueAsNumber: true })}
           />
         </div>
-        {errors.amount && (
-          <p className="text-xs text-expense">{errors.amount.message}</p>
-        )}
+        <FieldError>{errors.amount?.message}</FieldError>
       </div>
 
       <div className="-mx-4 -mb-4 flex flex-col-reverse gap-2 border-t bg-muted/50 p-4 sm:flex-row sm:justify-end">

@@ -16,6 +16,7 @@ import {
 import { today } from "@/lib/date";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -118,9 +119,7 @@ export function TransactionForm({ categories, transaction, onDone }: Props) {
             {...form.register("amount", { valueAsNumber: true })}
           />
         </div>
-        {errors.amount && (
-          <p className="text-xs text-expense">{errors.amount.message}</p>
-        )}
+        <FieldError>{errors.amount?.message}</FieldError>
       </div>
 
       {/* category */}
@@ -158,9 +157,7 @@ export function TransactionForm({ categories, transaction, onDone }: Props) {
             </Select>
           )}
         />
-        {errors.category_id && (
-          <p className="text-xs text-expense">{errors.category_id.message}</p>
-        )}
+        <FieldError>{errors.category_id?.message}</FieldError>
       </div>
 
       {/* date + note */}
@@ -173,9 +170,7 @@ export function TransactionForm({ categories, transaction, onDone }: Props) {
             className="tabular"
             {...form.register("occurred_at")}
           />
-          {errors.occurred_at && (
-            <p className="text-xs text-expense">{errors.occurred_at.message}</p>
-          )}
+          <FieldError>{errors.occurred_at?.message}</FieldError>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="note">Note (optional)</Label>
@@ -184,9 +179,7 @@ export function TransactionForm({ categories, transaction, onDone }: Props) {
             placeholder="e.g. Groceries"
             {...form.register("note")}
           />
-          {errors.note && (
-            <p className="text-xs text-expense">{errors.note.message}</p>
-          )}
+          <FieldError>{errors.note?.message}</FieldError>
         </div>
       </div>
 

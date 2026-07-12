@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { profileSchema, type ProfileValues } from "@/lib/validations/profile";
 import { updateProfile } from "@/lib/actions/profile";
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/field-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -42,9 +43,7 @@ export function ProfileForm({
       <div className="space-y-1.5">
         <Label htmlFor="display_name">Display name</Label>
         <Input id="display_name" {...form.register("display_name")} />
-        {errors.display_name && (
-          <p className="text-xs text-expense">{errors.display_name.message}</p>
-        )}
+        <FieldError>{errors.display_name?.message}</FieldError>
       </div>
 
       <div className="space-y-1.5">
@@ -63,9 +62,7 @@ export function ProfileForm({
         <p className="text-xs text-muted-foreground">
           Used to gauge your savings rate on the dashboard.
         </p>
-        {errors.monthly_income && (
-          <p className="text-xs text-expense">{errors.monthly_income.message}</p>
-        )}
+        <FieldError>{errors.monthly_income?.message}</FieldError>
       </div>
 
       <div className="flex justify-end">
