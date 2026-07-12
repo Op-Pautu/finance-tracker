@@ -22,6 +22,13 @@ export default async function AppLayout({
 
   return (
     <div className="min-h-full flex-1 bg-background">
+      <a
+        href="#main-content"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-2 focus-visible:left-2 focus-visible:z-50 focus-visible:rounded-lg focus-visible:bg-primary focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-medium focus-visible:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+      >
+        Skip to content
+      </a>
+
       <Sidebar name={name} email={email} avatarUrl={avatarUrl} />
 
       <div className="flex min-h-full flex-1 flex-col lg:pl-64">
@@ -39,7 +46,10 @@ export default async function AppLayout({
           />
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <main
+          id="main-content"
+          className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+        >
           {children}
         </main>
       </div>
