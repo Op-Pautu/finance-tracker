@@ -2,15 +2,8 @@
 
 import * as React from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-import {
-  monthFromKey,
-  monthKey,
-  monthLabel,
-  shiftMonthKey,
-} from "@/lib/date";
+import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -19,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MonthNav } from "@/components/shared/month-nav";
 import type { Category, TxKind } from "@/types/db";
 
 type TypeFilter = "all" | TxKind;
@@ -28,7 +22,6 @@ export function TransactionFilters({ categories }: { categories: Category[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const month = searchParams.get("month") ?? monthKey();
   const type = (searchParams.get("type") as TypeFilter) || "all";
   const category = searchParams.get("category") ?? "all";
   const q = searchParams.get("q") ?? "";
@@ -66,28 +59,7 @@ export function TransactionFilters({ categories }: { categories: Category[] }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
-        {/* month stepper */}
-        <div className="flex items-center rounded-lg border bg-card p-0.5">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Previous month"
-            onClick={() => setParam({ month: shiftMonthKey(month, -1) })}
-          >
-            <ChevronLeft className="size-4" />
-          </Button>
-          <span className="min-w-32 px-1 text-center text-sm font-medium">
-            {monthLabel(monthFromKey(month))}
-          </span>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Next month"
-            onClick={() => setParam({ month: shiftMonthKey(month, 1) })}
-          >
-            <ChevronRight className="size-4" />
-          </Button>
-        </div>
+        <MonthNav />
 
         {/* type segmented */}
         <div className="flex items-center gap-0.5 rounded-lg border bg-card p-0.5">
