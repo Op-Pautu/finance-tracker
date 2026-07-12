@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { AuthForm } from "@/components/auth/auth-form";
-import { GoogleButton } from "@/components/auth/google-button";
 
 export const metadata: Metadata = { title: "Sign in" };
 
@@ -20,14 +19,6 @@ export default async function LoginPage({
         <p className="text-sm text-muted-foreground">
           Sign in to pick up where you left off.
         </p>
-      </div>
-
-      <GoogleButton next={next} />
-
-      <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-border" />
-        <span className="text-xs text-muted-foreground">or</span>
-        <span className="h-px flex-1 bg-border" />
       </div>
 
       <AuthForm mode="sign-in" next={next} />
