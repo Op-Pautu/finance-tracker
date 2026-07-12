@@ -62,11 +62,16 @@ export function TransactionFilters({ categories }: { categories: Category[] }) {
         <MonthNav />
 
         {/* type segmented */}
-        <div className="flex items-center gap-0.5 rounded-lg border bg-card p-0.5">
+        <div
+          role="group"
+          aria-label="Filter by type"
+          className="flex items-center gap-0.5 rounded-lg border bg-card p-0.5"
+        >
           {(["all", "expense", "income"] as const).map((t) => (
             <button
               key={t}
               type="button"
+              aria-pressed={type === t}
               onClick={() => setParam({ type: t, category: "all" })}
               className={cn(
                 "rounded-md px-2.5 py-1 text-xs font-medium capitalize transition-colors",

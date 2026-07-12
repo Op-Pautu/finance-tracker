@@ -88,7 +88,7 @@ export function MonthNav() {
               <ChevronRight className="size-4" />
             </Button>
           </div>
-          <div className="grid grid-cols-3 gap-1">
+          <div role="group" aria-label="Choose month" className="grid grid-cols-3 gap-1">
             {MONTH_ABBR.map((label, i) => {
               const active =
                 pickerYear === selected.getFullYear() &&
@@ -97,6 +97,7 @@ export function MonthNav() {
                 <button
                   key={label}
                   type="button"
+                  aria-pressed={active}
                   onClick={() => pick(i)}
                   className={cn(
                     "rounded-md py-1.5 text-sm font-medium transition-colors",
