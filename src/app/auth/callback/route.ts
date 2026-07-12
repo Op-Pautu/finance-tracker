@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-
-function isValidRedirect(path: string): boolean {
-  return path.startsWith("/") && !path.startsWith("//");
-}
+import { isValidRedirect } from "@/lib/utils";
 
 /**
  * OAuth / email-confirmation callback. Supabase redirects here with a `code`

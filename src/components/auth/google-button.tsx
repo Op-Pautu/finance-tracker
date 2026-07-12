@@ -4,10 +4,7 @@ import * as React from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
-function isValidRedirect(path: string): boolean {
-  return path.startsWith("/") && !path.startsWith("//");
-}
+import { isValidRedirect } from "@/lib/utils";
 
 /** "Continue with Google" — initiates the OAuth redirect from the browser. */
 export function GoogleButton({ next }: { next?: string }) {

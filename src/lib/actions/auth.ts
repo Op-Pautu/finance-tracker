@@ -4,15 +4,12 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { signInSchema, signUpSchema } from "@/lib/validations/auth";
+import { isValidRedirect } from "@/lib/utils";
 
 export type AuthState =
   | { error: string }
   | { notice: string }
   | null;
-
-function isValidRedirect(path: string): boolean {
-  return path.startsWith("/") && !path.startsWith("//");
-}
 
 /** Email + password sign in. On success, redirects into the app. */
 export async function signInAction(
