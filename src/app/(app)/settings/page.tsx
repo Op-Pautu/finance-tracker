@@ -2,17 +2,21 @@ import type { Metadata } from "next";
 import { LogOut, Download } from "lucide-react";
 import { getCurrentProfile } from "@/lib/supabase/auth";
 import { signOutAction } from "@/lib/actions/auth";
+import { getCategories } from "@/lib/queries/transactions";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
+  CardAction,
 } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/app/page-header";
 import { ProfileForm } from "@/components/settings/profile-form";
+import { CategoryList } from "@/components/categories/category-list";
+import { NewCategoryButton } from "@/components/categories/new-category-button";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -20,6 +24,7 @@ export default async function SettingsPage() {
   const { user, profile } = await getCurrentProfile();
   const name = profile?.display_name || user.email?.split("@")[0] || "";
   const income = profile?.monthly_income ? Number(profile.monthly_income) : 0;
+  const categories = await getCategories(user.id);
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -37,6 +42,21 @@ export default async function SettingsPage() {
         </CardHeader>
         <CardContent>
           <ProfileForm defaultName={name} defaultIncome={income} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Categories</CardTitle>
+          <CardDescription>
+            Used to sort your transactions and budgets.
+          </CardDescription>
+          <CardAction>
+            <NewCategoryButton />
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <CategoryList categories={categories} />
         </CardContent>
       </Card>
 
