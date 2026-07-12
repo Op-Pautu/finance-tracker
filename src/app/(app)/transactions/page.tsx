@@ -52,7 +52,7 @@ export default async function TransactionsPage({
       <TransactionFilters categories={categories} />
 
       {/* summary for the current filter */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <SummaryStat
           icon={ArrowUpRight}
           label="Income"
