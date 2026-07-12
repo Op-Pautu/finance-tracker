@@ -12,6 +12,7 @@ import {
   DEFAULT_GOAL_COLOR,
   DEFAULT_GOAL_ICON,
 } from "@/lib/goal-options";
+import { COLOR_NAMES } from "@/lib/color-names";
 import { resolveIcon } from "@/components/shared/category-icon";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -107,7 +108,7 @@ export function GoalForm({
                 <button
                   key={c}
                   type="button"
-                  aria-label={`Colour ${c}`}
+                  aria-label={`Colour ${COLOR_NAMES[c] ?? c}`}
                   onClick={() => field.onChange(c)}
                   className={cn(
                     "grid size-7 place-items-center rounded-full transition-transform hover:scale-110",
