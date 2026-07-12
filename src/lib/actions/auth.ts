@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { signInSchema, signUpSchema } from "@/lib/validations/auth";
 import { isValidRedirect } from "@/lib/utils";
@@ -48,11 +49,19 @@ export async function signUpAction(
     return { error: parsed.error.issues[0]?.message ?? "Invalid details" };
   }
 
+  const origin =
+    (await headers()).get("origin") ??
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "http://localhost:3000";
+
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
-    options: { data: { full_name: parsed.data.name } },
+    options: {
+      emailRedirectTo: `${origin}/auth/callback`,
+      data: { full_name: parsed.data.name },
+    },
   });
   if (error) return { error: error.message };
 
