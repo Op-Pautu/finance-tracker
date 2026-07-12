@@ -1,7 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { LogOut, Settings, ChevronsUpDown } from "lucide-react";
+import { useTheme } from "next-themes";
+import {
+  LogOut,
+  Settings,
+  ChevronsUpDown,
+  Sun,
+  Moon,
+  Monitor,
+} from "lucide-react";
 import { signOutAction } from "@/lib/actions/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -9,7 +17,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -25,6 +38,7 @@ export function UserMenu({
   variant?: "sidebar" | "compact";
 }) {
   const initials = getInitials(name || email);
+  const { theme = "system", setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -64,6 +78,34 @@ export function UserMenu({
           <Settings className="size-4" />
           Settings
         </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            {theme === "dark" ? (
+              <Moon className="size-4" />
+            ) : theme === "light" ? (
+              <Sun className="size-4" />
+            ) : (
+              <Monitor className="size-4" />
+            )}
+            Theme
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+              <DropdownMenuRadioItem value="light">
+                <Sun className="size-4" />
+                Light
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="dark">
+                <Moon className="size-4" />
+                Dark
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="system">
+                <Monitor className="size-4" />
+                System
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           variant="destructive"
